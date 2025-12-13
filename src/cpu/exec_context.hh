@@ -52,6 +52,8 @@
 namespace gem5
 {
 
+namespace o3 { enum NeuronInst : uint8_t; }
+
 /**
  * The ExecContext is an abstract base class the provides the
  * interface used by the ISA to manipulate the state of the CPU model.
@@ -227,6 +229,24 @@ class ExecContext
     virtual void mwaitAtomic(ThreadContext *tc) = 0;
     virtual AddressMonitor *getAddrMonitor() = 0;
 
+    /** @} */
+
+    /**
+     * @{
+     * @name coprocessor Interfaces
+     */
+
+    /**
+     * call coprocessor operation
+     */
+    virtual RegVal
+    coprocessorExec(o3::NeuronInst instClass,
+                    RegVal rs1,
+                    RegVal rs2,
+                    uint8_t* mem)
+    {
+       panic("ExecContext::coprocessorExec() should be overridden\n");
+    }
     /** @} */
 };
 

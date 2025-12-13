@@ -2064,6 +2064,131 @@ decode QUADRANT default Unknown::unknown() {
             }
         }
 
+        // APU Custom Instructions Extension
+        0x0a: decode FUNCT3 {
+            0x3: decode FUNCT7 {
+                format ROp {
+                    // 3.2.1 向量加载类指令 & 3.2.2 向量写回类指令
+                    0x00: la_wv({{
+                        std::cout << "[APU] Detected la.wv instruction" << std::endl;
+                    }});
+                    0x10: la_sv({{
+                        std::cout << "[APU] Detected la.sv instruction" << std::endl;
+                    }});
+                    0x20: la_v({{
+                        std::cout << "[APU] Detected la.v instruction" << std::endl;
+                    }});
+                    0x0a: sa_v({{
+                        std::cout << "[APU] Detected sa.v instruction" << std::endl;
+                    }});
+
+                    // 3.2.3 数据移动类指令
+                    0x01: movw_v({{
+                        std::cout << "[APU] Detected movw.v instruction" << std::endl;
+                    }});
+                    0x11: movd_v({{
+                        std::cout << "[APU] Detected movd.v instruction" << std::endl;
+                    }});
+                    0x41: movd_g({{
+                        std::cout << "[APU] Detected movd.g instruction" << std::endl;
+                    }});
+                    0x02: movw_wv({{
+                        std::cout << "[APU] Detected movw.wv instruction" << std::endl;
+                    }});
+                    0x12: movd_wv({{
+                        std::cout << "[APU] Detected movd.wv instruction" << std::endl;
+                    }});
+                    0x03: movw_sv({{
+                        std::cout << "[APU] Detected movw.sv instruction" << std::endl;
+                    }});
+                    0x13: movd_sv({{
+                        std::cout << "[APU] Detected movd.sv instruction" << std::endl;
+                    }});
+                    0x04: movw_so({{
+                        std::cout << "[APU] Detected movw.so instruction" << std::endl;
+                    }});
+                    0x14: mova_so({{
+                        std::cout << "[APU] Detected mova.so instruction" << std::endl;
+                    }});
+
+                    // 3.2.4 电流计算类指令 (纵向)
+                    0x05: acch({{
+                        std::cout << "[APU] Detected acch instruction" << std::endl;
+                    }});
+                    0x15: acca({{
+                        std::cout << "[APU] Detected acca instruction" << std::endl;
+                    }});
+                    0x25: accm({{
+                        std::cout << "[APU] Detected accm instruction" << std::endl;
+                    }});
+                    0x35: accmw({{
+                        std::cout << "[APU] Detected accmw instruction" << std::endl;
+                    }});
+                    0x45: accae({{
+                        std::cout << "[APU] Detected accae instruction" << std::endl;
+                    }});
+                    0x55: accmwe({{
+                        std::cout << "[APU] Detected accmwe instruction" << std::endl;
+                    }});
+                    0x65: accxc({{
+                        std::cout << "[APU] Detected accxc instruction" << std::endl;
+                    }});
+
+                    // 3.2.4 电流计算类指令 (横向)
+                    0x06: doth({{
+                        std::cout << "[APU] Detected doth instruction" << std::endl;
+                    }});
+                    0x16: dota({{
+                        std::cout << "[APU] Detected dota instruction" << std::endl;
+                    }});
+                    0x26: dotae({{
+                        std::cout << "[APU] Detected dotae instruction" << std::endl;
+                    }});
+
+                    // 3.2.5 状态更新类指令
+                    0x07: upds({{
+                        std::cout << "[APU] Detected upds instruction" << std::endl;
+                    }});
+                    0x17: updg({{
+                        std::cout << "[APU] Detected updg instruction" << std::endl;
+                    }});
+                    0x27: upda({{
+                        std::cout << "[APU] Detected upda instruction" << std::endl;
+                    }});
+
+                    // 3.2.6 液体状态处理指令
+                    0x08: mac_ns({{
+                        std::cout << "[APU] Detected mac.ns instruction" << std::endl;
+                    }});
+
+                    // 3.2.7 状态清零类指令
+                    0x09: clrs_ns({{
+                        std::cout << "[APU] Detected clrs.ns instruction" << std::endl;
+                    }});
+                    0x19: clrg_ns({{
+                        std::cout << "[APU] Detected clrg.ns instruction" << std::endl;
+                    }});
+                    0x29: clra_ns({{
+                        std::cout << "[APU] Detected clra.ns instruction" << std::endl;
+                    }});
+                    0x39: clra_v({{
+                        std::cout << "[APU] Detected clra.v instruction" << std::endl;
+                    }});
+
+                    // Spike LLM 计算指令
+                    0x0c: sdot({{
+                        std::cout << "[APU] Detected sdot instruction" << std::endl;
+                    }});
+                    0x1c: acce({{
+                        std::cout << "[APU] Detected acce instruction" << std::endl;
+                    }});
+                    0x2c: accmse({{
+                        std::cout << "[APU] Detected accmse instruction" << std::endl;
+                    }});
+                }
+            }
+        }
+
         0x0b: decode FUNCT3 {
             0x2: decode AMOFUNCT {
                 0x2: LoadReserved::lr_w({{

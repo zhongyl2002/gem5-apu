@@ -114,7 +114,8 @@ CPU::CPU(const BaseO3CPUParams &params)
       globalSeqNum(1),
       system(params.system),
       lastRunningCycle(curCycle()),
-      cpuStats(this)
+      cpuStats(this),
+      neuronProcessor()
 {
     fatal_if(FullSystem && params.numThreads > 1,
             "SMT is not supported in O3 in full system mode currently.");
@@ -1466,6 +1467,15 @@ CPU::htmSendAbortSignal(ThreadID tid, uint64_t htm_uid,
     if (!iew.ldstQueue.getDataPort().sendTimingReq(abort_pkt)) {
         panic("HTM abort signal was not sent to the memory subsystem.");
     }
+}
+
+RegVal
+CPU::coprocessorExec(NeuronInst instClass,
+                     RegVal rs1,
+                     RegVal rs2,
+                     uint8_t* mem)
+{
+    return neuronProcessor.coprocessorExec(instClass, rs1, rs2, mem);
 }
 
 } // namespace o3

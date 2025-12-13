@@ -1169,6 +1169,15 @@ class DynInst : public ExecContext, public RefCounted
         cpu->setReg(reg, val, threadNumber);
         setResult(reg->regClass(), val);
     }
+
+    RegVal
+    coprocessorExec(o3::NeuronInst instClass,
+                    RegVal rs1,
+                    RegVal rs2,
+                    uint8_t* mem) override
+    {
+        return cpu->coprocessorExec(instClass, rs1, rs2, mem);
+    }
 };
 
 } // namespace o3

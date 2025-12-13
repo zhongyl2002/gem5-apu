@@ -70,6 +70,8 @@
 #include "params/BaseO3CPU.hh"
 #include "sim/process.hh"
 
+#include "cpu/o3/NeuronProcessor.hh"
+
 namespace gem5
 {
 
@@ -590,6 +592,16 @@ class CPU : public BaseCPU
     // hardware transactional memory
     void htmSendAbortSignal(ThreadID tid, uint64_t htm_uid,
                             HtmFailureFaultCause cause) override;
+  
+  // coprocessor
+  private:
+    NeuronProcessor neuronProcessor;
+
+  public:
+  RegVal coprocessorExec(NeuronInst instClass,
+                         RegVal rs1,
+                         RegVal rs2,
+                         uint8_t* mem);
 };
 
 } // namespace o3
